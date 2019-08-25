@@ -11,18 +11,25 @@
 #include "lmdb.h"
 #include "lmdbpp.h"
 #include <atomic>
+#include "DataBaseConfig.h"
+
+#include <memory>
 
 namespace CryptoNote
 {
     class MainChainStorageLmdb : public IMainChainStorage
     {
         public:
-            MainChainStorageLmdb(const std::string &blocksFilename, const std::string &indexesFilename);
+            MainChainStorageLmdb(
+                const std::string &blocksFilename,
+                const std::string &indexesFilename
+            );
 
             virtual ~MainChainStorageLmdb();
 
             virtual void pushBlock(const RawBlock &rawBlock) override;
             virtual void popBlock() override;
+            virtual void rewindTo(const uint32_t index) override;
 
             virtual RawBlock getBlockByIndex(const uint32_t index) override;
             virtual uint32_t getBlockCount() const override;

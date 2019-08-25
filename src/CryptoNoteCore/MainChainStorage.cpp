@@ -43,7 +43,7 @@ void MainChainStorage::popBlock() {
   storage.pop_back();
 }
 
-void MainChainStorage::rewindTo(const uint32_t index) const
+void MainChainStorage::rewindTo(const uint32_t index) 
 {
   while(getBlockCount() >= index) {
       storage.pop_back();

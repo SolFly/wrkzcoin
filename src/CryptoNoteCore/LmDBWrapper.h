@@ -27,23 +27,24 @@ public:
   LmDBWrapper(std::shared_ptr<Logging::ILogger> logger);
   virtual ~LmDBWrapper();
 
-  LmDBWrapper(const LmDBWrapper&) = delete;
-  LmDBWrapper(LmDBWrapper&&) = delete;
+  LmDBWrapper(const LmDBWrapper &) = delete;
+  LmDBWrapper(LmDBWrapper &&) = delete;
 
-  LmDBWrapper& operator=(const LmDBWrapper&) = delete;
-  LmDBWrapper& operator=(LmDBWrapper&&) = delete;
+  LmDBWrapper &operator=(const LmDBWrapper &) = delete;
+  LmDBWrapper &operator=(LmDBWrapper &&) = delete;
 
-  void init(const DataBaseConfig& config);
+  void init(const DataBaseConfig &config);
   void shutdown();
-  void destroy(const DataBaseConfig& config); //Be careful with this method!
 
-  std::error_code write(IWriteBatch& batch) override;
-  std::error_code read(IReadBatch& batch) override;
+  void destroy(const DataBaseConfig &config); //Be careful with this method!
+
+  std::error_code write(IWriteBatch &batch) override;
+  std::error_code read(IReadBatch &batch) override;
 
 private:
   void checkResize(const bool init);
-  void setDataDir(const DataBaseConfig& config);
-  std::string getDataDir(const DataBaseConfig& config);
+  void setDataDir(const DataBaseConfig &config);
+  std::string getDataDir(const DataBaseConfig &config);
   void renewRoTxHandle();
   void renewRwTxHandle(bool sync);
 
