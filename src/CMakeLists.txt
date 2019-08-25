@@ -2,16 +2,14 @@
 add_definitions(-DSTATICLIB)
 
 # Add external libraries as include dirs, so we can do #include "httplib" for example
-include_directories(${CMAKE_SOURCE_DIR}/external/rocksdb/include)
 include_directories(${CMAKE_SOURCE_DIR}/external/cpp-linenoise)
 include_directories(${CMAKE_SOURCE_DIR}/external/cpp-httplib)
 include_directories(${CMAKE_SOURCE_DIR}/external/nlohmann-json)
 include_directories(${CMAKE_SOURCE_DIR}/external/rapidjson)
 include_directories(${CMAKE_SOURCE_DIR}/external/cxxopts)
 include_directories(${CMAKE_SOURCE_DIR}/external/cryptopp)
-include_directories(${CMAKE_SOURCE_DIR}/external/sqlite3)
-include_directories(${CMAKE_SOURCE_DIR}/external/lz4)
 include_directories(${CMAKE_SOURCE_DIR}/external/argon2/include)
+include_directories(${CMAKE_SOURCE_DIR}/external/lmdb)
 
 # Show cmake where the source files are
 # Note, if you add remove a source file, you will need to re-run cmake so it
@@ -131,15 +129,15 @@ elseif (UNIX)
 endif()
 
 if(MSVC)
-    target_link_libraries(Wrkzd System CryptoNoteCore rocksdb lz4 sqlite3 Errors ${Boost_LIBRARIES})
+    target_link_libraries(Wrkzd System CryptoNoteCore lmdb Errors ${Boost_LIBRARIES})
 else()
-    target_link_libraries(Wrkzd System CryptoNoteCore rocksdblib lz4 sqlite3 Errors ${Boost_LIBRARIES})
+    target_link_libraries(Wrkzd System CryptoNoteCore lmdb Errors ${Boost_LIBRARIES})
 endif()
 
 # Add the dependencies we need
 target_link_libraries(Common __filesystem)
 target_link_libraries(Crypto argon2)
-target_link_libraries(CryptoNoteCore Utilities Common Logging Crypto P2P Rpc Http Serialization System sqlite3 ${Boost_LIBRARIES})
+target_link_libraries(CryptoNoteCore Utilities Common Logging Crypto P2P Rpc Http Serialization System ${Boost_LIBRARIES})
 target_link_libraries(cryptotest Crypto Common)
 target_link_libraries(Errors Crypto SubWallets Utilities)
 target_link_libraries(Logging Common)
